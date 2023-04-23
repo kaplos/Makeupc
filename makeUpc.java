@@ -1,20 +1,41 @@
 import java.util.*;
 import java.lang.StringBuilder;
 import java.io.*;
-import java.util.Deque;
 import java.net.*;
 public class makeUpc{
     public static void main(String[]arg)throws Exception{
         StringBuilder sb = new StringBuilder();
         StringBuilder FinalUpc = new StringBuilder();
-        // make a get request to the url and get the response
+        Scanner sc = new Scanner(System.in);
         URL url = new URL("https://api.upcitemdb.com/prod/trial/lookup?upc=");
-        PrintStream out = new PrintStream(new File("upc.txt"));
-        int starting = 885911;
+        File file = new File("upc1.text");
+        file.createNewFile();
+        PrintStream out = new PrintStream(file);
+        Integer starting;     
+        String startingLenght;
+                if(arg.length==0){ 
+                    System.out.println("Please enter the first 6 digits of the upc");
+                    starting = sc.nextInt();
+                    startingLenght = starting.toString();
+                        while(startingLenght.length()!=6){
+                            System.out.println("Invalid entry you entered "+ startingLenght.length() +" digits, Please enter 6 digits");
+                            starting = sc.nextInt();
+                            startingLenght = starting.toString();
+                        }
+                    sc.close();
+                }else{
+                    starting = Integer.parseInt(arg[0]);
+                    startingLenght = arg[0];
+                        while(startingLenght.length()!=6){
+                            System.out.println("Invalid entry you entered an invalid amount of digits , Please enter 6 digits using your keypad");
+                            starting = sc.nextInt();
+                            startingLenght = starting.toString();
+                        }
+                }
         int ending = 11111;
-        String endingPart = Integer.toString(ending);
+        //String endingPart = Integer.toString(ending);
 
-        for(int i = 0 ; i < 10; i++){
+        for(int i = 0 ; i < 2; i++){
             String upc = starting+""+ending;
             //String FinalUpc = upc +""+calculateUPC(upc);
             FinalUpc.append(starting+""+ending++ +""+calculateUPC(upc));
